@@ -57,7 +57,6 @@
       position: relative;
       z-index: 1;
     }
-    /* Header & Hamburger */
     header {
       background: rgba(255,255,255,0.92);
       padding: 1rem 2rem;
@@ -293,6 +292,21 @@
       width: 100%;
       border-radius: 10px;
       margin-bottom: 0.5rem;
+      transition: filter 0.3s;
+    }
+    .model-img-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .model-img-preview img {
+      width: 180px;
+      max-width: 90vw;
+      border-radius: 15px;
+      box-shadow: 0 2px 12px var(--shadow-light);
+      background: #fff;
+      transition: opacity 0.4s;
     }
     label {
       display: block;
@@ -434,6 +448,9 @@
       .model-item {
         width: 90px;
       }
+      .model-img-preview img {
+        width: 120px;
+      }
     }
   </style>
 </head>
@@ -491,6 +508,9 @@
       <section id="customization" class="customization section">
         <h3>Personaliza tu vela</h3>
         <div id="modelsContainer"></div>
+        <div class="model-img-preview" id="modelImgPreview" style="display:none;">
+          <img id="mainModelImg" src="" alt="Modelo de vela">
+        </div>
         <form id="customizeForm" style="display:none;">
           <label for="scent">Elige la esencia:</label>
           <select id="scent" name="scent" required>
@@ -575,7 +595,6 @@
       nav.classList.remove('open');
       navBackdrop.classList.remove('open');
     });
-    // Cerrar menú al seleccionar una opción en móvil
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('open');
@@ -583,48 +602,49 @@
       });
     });
 
-    // Datos de colecciones y modelos con imágenes PNG
+    // Datos de colecciones y modelos con imágenes PNG y variantes por color
+    // Estructura: modelo: { base: "ruta", colores: { color: "ruta" } }
     const collectionsData = {
       marina: [
-        { name: 'Estrella', img: 'images/marina_estrella.png' },
-        { name: 'Caracola', img: 'images/marina_caracola.png' },
-        { name: 'Concha yeso', img: 'images/marina_concha_yeso.png' },
-        { name: 'Concha', img: 'images/marina_concha.png' }
+        { name: 'Estrella', base: 'images/marina_estrella', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Caracola', base: 'images/marina_caracola', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Concha yeso', base: 'images/marina_concha_yeso', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Concha', base: 'images/marina_concha', colors: ['blanco','rosa','lila','amarillo'] }
       ],
       floral: [
-        { name: 'Tarro y flor', img: 'images/floral_tarroyflor.png' },
-        { name: 'Flor Rosa', img: 'images/floral_flrorosa.png' },
-        { name: 'Bouquet flores', img: 'images/floral_bouquet.png' },
-        { name: 'Vaso cristal y margarita', img: 'images/floral_vasocristal.png' },
-        { name: 'Tulipán', img: 'images/floral_tulipan.png' }
+        { name: 'Tarro y flor', base: 'images/floral_tarroyflor', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Flor Rosa', base: 'images/floral_flrorosa', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Bouquet flores', base: 'images/floral_bouquet', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Vaso cristal y margarita', base: 'images/floral_vasocristal', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Tulipán', base: 'images/floral_tulipan', colors: ['blanco','rosa','lila','amarillo'] }
       ],
       cactus: [
-        { name: 'Mini cactus', img: 'images/cactus_minicactus.png' },
-        { name: 'Conjunto cactus', img: 'images/cactus_conjuntocactus.png' }
+        { name: 'Mini cactus', base: 'images/cactus_minicactus', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Conjunto cactus', base: 'images/cactus_conjuntocactus', colors: ['blanco','rosa','lila','amarillo'] }
       ],
       halloween: [
-        { name: 'Calabaza yeso', img: 'images/halloween_calabaza.png' },
-        { name: 'Conjunto calabazas', img: 'images/halloween_conjuntocalabazas.png' }
+        { name: 'Calabaza yeso', base: 'images/halloween_calabaza', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Conjunto calabazas', base: 'images/halloween_conjuntocalabazas', colors: ['blanco','rosa','lila','amarillo'] }
       ],
       navidad: [
-        { name: 'Carrusel', img: 'images/navidad_carrusel.png' },
-        { name: 'Árbol Navidad', img: 'images/navidad_arbol.png' },
-        { name: 'Gnomos', img: 'images/navidad_gnomos.png' },
-        { name: 'Casitas', img: 'images/navidad_casitas.png' }
+        { name: 'Carrusel', base: 'images/navidad_carrusel', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Árbol Navidad', base: 'images/navidad_arbol', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Gnomos', base: 'images/navidad_gnomos', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Casitas', base: 'images/navidad_casitas', colors: ['blanco','rosa','lila','amarillo'] }
       ],
       pascua: [
-        { name: 'Huevo', img: 'images/pascua_huevo.png' },
-        { name: 'Conejito', img: 'images/pascua_conejito.png' }
+        { name: 'Huevo', base: 'images/pascua_huevo', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Conejito', base: 'images/pascua_conejito', colors: ['blanco','rosa','lila','amarillo'] }
       ],
       eventos: [
-        { name: 'Margarita', img: 'images/eventos_margarita.png' },
-        { name: 'Rosa', img: 'images/eventos_rosa.png' },
-        { name: 'Tulipán', img: 'images/eventos_tulipan.png' },
-        { name: 'Conejito', img: 'images/eventos_conejito.png' },
-        { name: 'Flor', img: 'images/eventos_flor.png' },
-        { name: 'Mini cactus', img: 'images/eventos_minicactus.png' },
-        { name: 'Conjunto cactus', img: 'images/eventos_conjuntocactus.png' },
-        { name: 'Conjunto flores', img: 'images/eventos_conjuntoflores.png' }
+        { name: 'Margarita', base: 'images/eventos_margarita', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Rosa', base: 'images/eventos_rosa', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Tulipán', base: 'images/eventos_tulipan', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Conejito', base: 'images/eventos_conejito', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Flor', base: 'images/eventos_flor', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Mini cactus', base: 'images/eventos_minicactus', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Conjunto cactus', base: 'images/eventos_conjuntocactus', colors: ['blanco','rosa','lila','amarillo'] },
+        { name: 'Conjunto flores', base: 'images/eventos_conjuntoflores', colors: ['blanco','rosa','lila','amarillo'] }
       ]
     };
 
@@ -652,18 +672,31 @@
       }
     });
 
-    // Manejo de selección de colección
+    // Personalización dinámica
     const modelsContainer = document.getElementById('modelsContainer');
     const customizeForm = document.getElementById('customizeForm');
     const sizeInput = document.getElementById('size');
     const sizeValue = document.getElementById('sizeValue');
+    const colorSelect = document.getElementById('color');
+    const modelImgPreview = document.getElementById('modelImgPreview');
+    const mainModelImg = document.getElementById('mainModelImg');
     let selectedCollection = null;
     let selectedModel = null;
+    let selectedModelObj = null;
+    let selectedColor = 'blanco';
+
+    function getModelImgPath(modelObj, color) {
+      // Busca si el color existe para el modelo, si no, usa blanco
+      let useColor = modelObj.colors.includes(color) ? color : 'blanco';
+      return `${modelObj.base}_${useColor}.png`;
+    }
 
     function showModels(collection) {
       selectedCollection = collection;
       selectedModel = null;
+      selectedModelObj = null;
       customizeForm.style.display = 'none';
+      modelImgPreview.style.display = 'none';
       modelsContainer.innerHTML = '';
       if (!collectionsData[collection]) return;
       const models = collectionsData[collection];
@@ -673,18 +706,24 @@
         const modelDiv = document.createElement('div');
         modelDiv.className = 'model-item';
         modelDiv.tabIndex = 0;
-        modelDiv.innerHTML = `<img src="${model.img}" alt="${model.name}" /><div>${model.name}</div>`;
+        modelDiv.innerHTML = `<img src="${getModelImgPath(model, 'blanco')}" alt="${model.name}" /><div>${model.name}</div>`;
         modelDiv.addEventListener('click', () => {
           document.querySelectorAll('.model-item').forEach(el => el.classList.remove('selected'));
           modelDiv.classList.add('selected');
           selectedModel = model.name;
+          selectedModelObj = model;
+          selectedColor = 'blanco';
+          // Mostrar preview de la imagen principal
+          mainModelImg.src = getModelImgPath(selectedModelObj, selectedColor);
+          mainModelImg.alt = selectedModel;
+          modelImgPreview.style.display = 'flex';
           customizeForm.style.display = 'block';
+          customizeForm.reset();
+          sizeValue.textContent = sizeInput.value + ' cm';
         });
         div.appendChild(modelDiv);
       });
       modelsContainer.appendChild(div);
-      customizeForm.reset();
-      sizeValue.textContent = sizeInput.value + ' cm';
     }
 
     document.querySelectorAll('.swiper-slide').forEach(slide => {
@@ -697,6 +736,13 @@
 
     sizeInput.addEventListener('input', () => {
       sizeValue.textContent = sizeInput.value + ' cm';
+    });
+
+    colorSelect.addEventListener('change', () => {
+      selectedColor = colorSelect.value;
+      if (selectedModelObj) {
+        mainModelImg.src = getModelImgPath(selectedModelObj, selectedColor);
+      }
     });
 
     // Carrito en localStorage
@@ -739,7 +785,7 @@
         return;
       }
       const scent = document.getElementById('scent').value;
-      const color = document.getElementById('color').value;
+      const color = colorSelect.value;
       const size = document.getElementById('size').value;
       const product = {
         collection: selectedCollection.charAt(0).toUpperCase() + selectedCollection.slice(1),
@@ -754,6 +800,11 @@
       customizeForm.reset();
       sizeValue.textContent = '10 cm';
       renderCart();
+      // Reset preview
+      if (selectedModelObj) {
+        mainModelImg.src = getModelImgPath(selectedModelObj, 'blanco');
+        colorSelect.value = 'blanco';
+      }
     });
 
     renderCart();
