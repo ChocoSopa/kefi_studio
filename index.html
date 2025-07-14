@@ -2,10 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kefi Studio - Profesional</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kefi Studio - Velas Personalizadas</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
+    /* Variables y estilos base para responsive */
     :root {
       --pastel-rosa: #f6e6f8;
       --pastel-lavanda: #e4d4ec;
@@ -16,14 +17,19 @@
       --shadow-light: rgba(0,0,0,0.1);
       --shadow-strong: rgba(0,0,0,0.15);
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
     body {
       font-family: 'Poppins', sans-serif;
       background: var(--pastel-rosa);
       color: var(--text-dark);
       line-height: 1.6;
       scroll-behavior: smooth;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     header {
       background: white;
@@ -35,12 +41,14 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      flex-shrink: 0;
     }
     header h1 {
       font-size: 1.8rem;
       color: var(--accent);
       font-weight: 700;
       letter-spacing: 2px;
+      cursor: default;
     }
     nav a {
       margin: 0 1rem;
@@ -58,6 +66,7 @@
       padding: 5rem 2rem;
       box-shadow: 0 4px 15px var(--shadow-strong);
       border-radius: 0 0 30px 30px;
+      flex-shrink: 0;
     }
     .hero h2 {
       font-size: 2.5rem;
@@ -86,16 +95,14 @@
       background: var(--accent-dark);
       box-shadow: 0 6px 15px var(--accent-dark);
     }
-    .section {
-      padding: 4rem 2rem;
+    main {
+      flex-grow: 1;
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      width: 100%;
     }
-    .collections {
-      position: relative;
-      margin-top: 2rem;
-    }
-    /* Swiper container and slides */
+    /* Swiper styles */
     .swiper {
       width: 100%;
       padding-bottom: 40px;
@@ -115,12 +122,13 @@
       user-select: none;
       height: 180px;
       transition: transform 0.3s ease;
+      padding: 1rem;
+      text-align: center;
     }
     .swiper-slide:hover {
       transform: translateY(-10px);
       box-shadow: 0 8px 25px var(--shadow-strong);
     }
-    /* Navigation buttons */
     .swiper-button-next, .swiper-button-prev {
       color: var(--accent);
       top: 50%;
@@ -135,29 +143,54 @@
       background: var(--accent);
       color: white;
     }
-    /* Candle customization section */
-    .customization {
+    /* Personalización */
+    section.customization {
       background: white;
       border-radius: 15px;
       box-shadow: 0 4px 15px var(--shadow-light);
       padding: 2rem;
-      max-width: 600px;
-      margin: 3rem auto;
+      margin: 3rem 0;
     }
-    .customization h3 {
+    section.customization h3 {
       text-align: center;
       margin-bottom: 1.5rem;
       color: var(--accent-dark);
       font-weight: 700;
       font-size: 1.8rem;
     }
-    .customization label {
+    .model-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .model-item {
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      padding: 0.5rem;
+      width: 120px;
+      text-align: center;
+      transition: border-color 0.3s;
+      user-select: none;
+    }
+    .model-item.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .model-item img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+    label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 600;
       color: var(--text-dark);
     }
-    .customization select, .customization input[type=range] {
+    select, input[type=range] {
       width: 100%;
       padding: 0.5rem;
       margin-bottom: 1.5rem;
@@ -165,14 +198,14 @@
       border: 1px solid #ccc;
       font-size: 1rem;
     }
-    .customization .range-value {
+    .range-value {
       text-align: right;
       font-weight: 600;
       margin-top: -1.2rem;
       margin-bottom: 1rem;
       color: var(--accent-dark);
     }
-    .customization button {
+    button.primary {
       display: block;
       width: 100%;
       padding: 0.8rem;
@@ -183,53 +216,52 @@
       font-size: 1.1rem;
       cursor: pointer;
       transition: background 0.3s;
-    }
-    .customization button:hover {
-      background: var(--accent-dark);
-    }
-    /* Collapsible products section */
-    .collapsible {
-      background: var(--accent);
-      color: white;
-      cursor: pointer;
-      padding: 1rem 2rem;
-      width: 100%;
-      border: none;
-      text-align: center;
-      outline: none;
-      font-size: 1.3rem;
-      border-radius: 15px;
-      margin: 2rem auto 1rem auto;
-      max-width: 600px;
       font-weight: 700;
-      transition: background 0.3s;
     }
-    .collapsible:hover {
+    button.primary:hover {
       background: var(--accent-dark);
     }
-    .content {
-      max-width: 600px;
-      margin: 0 auto 3rem auto;
-      padding: 0 1rem;
-      display: none;
-      overflow: hidden;
+    /* Carrito */
+    #cart {
       background: white;
       border-radius: 15px;
       box-shadow: 0 4px 15px var(--shadow-light);
+      padding: 2rem;
+      margin: 3rem 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .content ul {
+    #cart h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+    #cart ul {
       list-style: none;
-      padding: 1rem 2rem;
-      color: var(--text-dark);
-      font-weight: 600;
-      font-size: 1.1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 0 1rem;
+      margin-bottom: 1rem;
     }
-    .content ul li {
+    #cart ul li {
       padding: 0.5rem 0;
       border-bottom: 1px solid var(--pastel-lavanda);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
     }
-    /* About and contact sections styling */
-    #about {
+    #cart ul li button {
+      background: transparent;
+      border: none;
+      color: var(--accent-dark);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+    /* Secciones info */
+    #about, #contact {
       background: var(--pastel-lavanda);
       border-radius: 15px;
       box-shadow: 0 4px 15px var(--shadow-light);
@@ -241,18 +273,12 @@
       font-weight: 500;
       color: var(--text-dark);
     }
-    #contact {
-      max-width: 600px;
-      margin: 3rem auto 5rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px var(--shadow-light);
-    }
     .contact-form {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
     }
     .contact-form input,
     .contact-form textarea {
@@ -284,6 +310,27 @@
       font-weight: 600;
       color: var(--text-dark);
       box-shadow: 0 -2px 10px var(--shadow-light);
+      flex-shrink: 0;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .swiper-slide {
+        height: 140px;
+        font-size: 1rem;
+      }
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.9rem;
+      }
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .model-item {
+        width: 90px;
+      }
     }
   </style>
 </head>
@@ -293,8 +340,8 @@
     <nav>
       <a href="#hero">Inicio</a>
       <a href="#collections">Colecciones</a>
-      <a href="#customization">Personaliza tu vela</a>
-      <a href="#products">Productos</a>
+      <a href="#customization">Personaliza</a>
+      <a href="#cart">Carrito</a>
       <a href="#about">Sobre nosotros</a>
       <a href="#contact">Contacto</a>
     </nav>
@@ -306,80 +353,78 @@
     <button onclick="document.getElementById('collections').scrollIntoView({behavior: 'smooth'})">Explora nuestras colecciones</button>
   </section>
 
-  <section class="section" id="collections">
-    <h2 style="text-align:center; margin-bottom:2rem">Colecciones</h2>
-    <div class="swiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Marina</div>
-        <div class="swiper-slide">Floral</div>
-        <div class="swiper-slide">Cactus</div>
-        <div class="swiper-slide">Halloween</div>
-        <div class="swiper-slide">Navidad</div>
-        <div class="swiper-slide">Pascua</div>
-        <div class="swiper-slide">Eventos</div>
+  <main>
+    <!-- Carrusel de colecciones -->
+    <section id="collections" class="section">
+      <h2 style="text-align:center; margin-bottom:2rem;">Colecciones</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" data-collection="marina">Marina</div>
+          <div class="swiper-slide" data-collection="floral">Floral</div>
+          <div class="swiper-slide" data-collection="cactus">Cactus</div>
+          <div class="swiper-slide" data-collection="halloween">Halloween</div>
+          <div class="swiper-slide" data-collection="navidad">Navidad</div>
+          <div class="swiper-slide" data-collection="pascua">Pascua</div>
+          <div class="swiper-slide" data-collection="eventos">Eventos</div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
       </div>
-      <!-- Add Navigation -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section customization" id="customization">
-    <h3>Personaliza tu vela</h3>
-    <form id="customizeForm">
-      <label for="scent">Elige la esencia:</label>
-      <select id="scent" name="scent" required>
-        <option value="lavanda">Lavanda</option>
-        <option value="vainilla">Vainilla</option>
-        <option value="rosa">Rosa</option>
-        <option value="citrico">Cítrico</option>
-      </select>
+    <!-- Personalización dinámica -->
+    <section id="customization" class="customization section">
+      <h3>Personaliza tu vela</h3>
+      <div id="modelsContainer"></div>
+      <form id="customizeForm" style="display:none;">
+        <label for="scent">Elige la esencia:</label>
+        <select id="scent" name="scent" required>
+          <option value="lavanda">Lavanda</option>
+          <option value="vainilla">Vainilla</option>
+          <option value="rosa">Rosa</option>
+          <option value="citrico">Cítrico</option>
+        </select>
 
-      <label for="color">Elige el color:</label>
-      <select id="color" name="color" required>
-        <option value="blanco">Blanco</option>
-        <option value="rosa">Rosa</option>
-        <option value="lila">Lila</option>
-        <option value="amarillo">Amarillo</option>
-      </select>
+        <label for="color">Elige el color:</label>
+        <select id="color" name="color" required>
+          <option value="blanco">Blanco</option>
+          <option value="rosa">Rosa</option>
+          <option value="lila">Lila</option>
+          <option value="amarillo">Amarillo</option>
+        </select>
 
-      <label for="size">Elige el tamaño (cm):</label>
-      <input type="range" id="size" name="size" min="5" max="20" value="10" />
-      <div class="range-value" id="sizeValue">10 cm</div>
+        <label for="size">Elige el tamaño (cm):</label>
+        <input type="range" id="size" name="size" min="5" max="20" value="10" />
+        <div class="range-value" id="sizeValue">10 cm</div>
 
-      <button type="submit">Agregar al carrito</button>
-    </form>
-  </section>
+        <button type="submit" class="primary">Agregar al carrito</button>
+      </form>
+    </section>
 
-  <button class="collapsible">Ver todos los productos</button>
-  <div class="content">
-    <ul>
-      <li>Vela Marina - Lavanda - Blanco - 10cm</li>
-      <li>Vela Floral - Vainilla - Rosa - 15cm</li>
-      <li>Vela Cactus - Rosa - Lila - 12cm</li>
-      <li>Vela Halloween - Cítrico - Amarillo - 8cm</li>
-      <li>Vela Navidad - Lavanda - Blanco - 20cm</li>
-      <li>Vela Pascua - Vainilla - Rosa - 10cm</li>
-      <li>Vela Eventos - Rosa - Lila - 15cm</li>
-    </ul>
-  </div>
+    <!-- Carrito -->
+    <section id="cart" class="section">
+      <h3>Carrito de Compra</h3>
+      <ul id="cartItems"></ul>
+      <button id="clearCart" class="primary" style="background:#c08bab;">Vaciar carrito</button>
+    </section>
 
-  <section class="section" id="about">
-    <h2 style="text-align:center; margin-bottom:1rem">Sobre Kefi Studio</h2>
-    <p>
-      Kefi Studio nace del amor por las velas artesanales, sostenibles y con diseño artístico. Hechas a mano con materiales naturales y mucha dedicación.
-    </p>
-  </section>
+    <section id="about">
+      <h2>Sobre Kefi Studio</h2>
+      <p>
+        Kefi Studio nace del amor por las velas artesanales, sostenibles y con diseño artístico. Hechas a mano con materiales naturales y mucha dedicación.
+      </p>
+    </section>
 
-  <section class="section" id="contact">
-    <h2 style="text-align:center; margin-bottom:1rem">Contacto</h2>
-    <form class="contact-form">
-      <input type="text" placeholder="Tu nombre" required />
-      <input type="email" placeholder="Tu correo" required />
-      <textarea placeholder="Tu mensaje..." rows="5" required></textarea>
-      <button type="submit">Enviar mensaje</button>
-    </form>
-  </section>
+    <section id="contact">
+      <h2>Contacto</h2>
+      <form class="contact-form">
+        <input type="text" placeholder="Tu nombre" required />
+        <input type="email" placeholder="Tu correo" required />
+        <textarea placeholder="Tu mensaje..." rows="5" required></textarea>
+        <button type="submit">Enviar mensaje</button>
+      </form>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 Kefi Studio. Todos los derechos reservados.</p>
@@ -387,7 +432,52 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Swiper para colecciones
+    // Datos de colecciones y modelos con imágenes
+    const collectionsData = {
+      marina: [
+        { name: 'Estrella', img: 'images/marina_estrella.jpg' },
+        { name: 'Caracola', img: 'images/marina_caracola.jpg' },
+        { name: 'Concha yeso', img: 'images/marina_concha_yeso.jpg' },
+        { name: 'Concha', img: 'images/marina_concha.jpg' }
+      ],
+      floral: [
+        { name: 'Tarro y flor', img: 'images/floral_tarroyflor.jpg' },
+        { name: 'Flor Rosa', img: 'images/floral_flrorosa.jpg' },
+        { name: 'Bouquet flores', img: 'images/floral_bouquet.jpg' },
+        { name: 'Vaso cristal y margarita', img: 'images/floral_vasocristal.jpg' },
+        { name: 'Tulipán', img: 'images/floral_tulipan.jpg' }
+      ],
+      cactus: [
+        { name: 'Mini cactus', img: 'images/cactus_minicactus.jpg' },
+        { name: 'Conjunto cactus', img: 'images/cactus_conjuntocactus.jpg' }
+      ],
+      halloween: [
+        { name: 'Calabaza yeso', img: 'images/halloween_calabaza.jpg' },
+        { name: 'Conjunto calabazas', img: 'images/halloween_conjuntocalabazas.jpg' }
+      ],
+      navidad: [
+        { name: 'Carrusel', img: 'images/navidad_carrusel.jpg' },
+        { name: 'Árbol Navidad', img: 'images/navidad_arbol.jpg' },
+        { name: 'Gnomos', img: 'images/navidad_gnomos.jpg' },
+        { name: 'Casitas', img: 'images/navidad_casitas.jpg' }
+      ],
+      pascua: [
+        { name: 'Huevo', img: 'images/pascua_huevo.jpg' },
+        { name: 'Conejito', img: 'images/pascua_conejito.jpg' }
+      ],
+      eventos: [
+        { name: 'Margarita', img: 'images/eventos_margarita.jpg' },
+        { name: 'Rosa', img: 'images/eventos_rosa.jpg' },
+        { name: 'Tulipán', img: 'images/eventos_tulipan.jpg' },
+        { name: 'Conejito', img: 'images/eventos_conejito.jpg' },
+        { name: 'Flor', img: 'images/eventos_flor.jpg' },
+        { name: 'Mini cactus', img: 'images/eventos_minicactus.jpg' },
+        { name: 'Conjunto cactus', img: 'images/eventos_conjuntocactus.jpg' },
+        { name: 'Conjunto flores', img: 'images/eventos_conjuntoflores.jpg' }
+      ]
+    };
+
+    // Inicializar Swiper
     const swiper = new Swiper('.swiper', {
       slidesPerView: 3,
       spaceBetween: 30,
@@ -402,36 +492,132 @@
       },
     });
 
-    // Sección desplegable de productos
-    const coll = document.querySelector('.collapsible');
-    const content = document.querySelector('.content');
-    coll.addEventListener('click', () => {
-      if (content.style.display === 'block') {
-        content.style.display = 'none';
-        coll.textContent = 'Ver todos los productos';
-      } else {
-        content.style.display = 'block';
-        coll.textContent = 'Ocultar productos';
+    // Avanzar diapositivas con scroll vertical
+    let lastScroll = 0;
+    window.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) {
+        swiper.slideNext();
+      } else if (e.deltaY < 0) {
+        swiper.slidePrev();
       }
     });
 
-    // Actualización del valor del rango de tamaño
+    // Manejo de selección de colección
+    const modelsContainer = document.getElementById('modelsContainer');
+    const customizeForm = document.getElementById('customizeForm');
     const sizeInput = document.getElementById('size');
     const sizeValue = document.getElementById('sizeValue');
+    let selectedCollection = null;
+    let selectedModel = null;
+
+    // Mostrar modelos de la colección seleccionada
+    function showModels(collection) {
+      selectedCollection = collection;
+      selectedModel = null;
+      customizeForm.style.display = 'none';
+      modelsContainer.innerHTML = '';
+      if (!collectionsData[collection]) return;
+      const models = collectionsData[collection];
+      const div = document.createElement('div');
+      div.className = 'model-list';
+      models.forEach(model => {
+        const modelDiv = document.createElement('div');
+        modelDiv.className = 'model-item';
+        modelDiv.tabIndex = 0;
+        modelDiv.innerHTML = `<img src="${model.img}" alt="${model.name}" /><div>${model.name}</div>`;
+        modelDiv.addEventListener('click', () => {
+          document.querySelectorAll('.model-item').forEach(el => el.classList.remove('selected'));
+          modelDiv.classList.add('selected');
+          selectedModel = model.name;
+          customizeForm.style.display = 'block';
+        });
+        div.appendChild(modelDiv);
+      });
+      modelsContainer.appendChild(div);
+      customizeForm.reset();
+      sizeValue.textContent = sizeInput.value + ' cm';
+    }
+
+    // Al hacer click en una colección del carrusel
+    document.querySelectorAll('.swiper-slide').forEach(slide => {
+      slide.addEventListener('click', () => {
+        const collection = slide.getAttribute('data-collection');
+        showModels(collection);
+        document.getElementById('customization').scrollIntoView({behavior: 'smooth'});
+      });
+    });
+
+    // Actualizar valor tamaño
     sizeInput.addEventListener('input', () => {
       sizeValue.textContent = sizeInput.value + ' cm';
     });
 
-    // Envío del formulario de personalización
-    const customizeForm = document.getElementById('customizeForm');
+    // Carrito en localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItems = document.getElementById('cartItems');
+    const clearCartBtn = document.getElementById('clearCart');
+
+    function renderCart() {
+      cartItems.innerHTML = '';
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<li>El carrito está vacío.</li>';
+        return;
+      }
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.collection} - ${item.model} - Esencia: ${item.scent}, Color: ${item.color}, Tamaño: ${item.size} cm`;
+        const btn = document.createElement('button');
+        btn.textContent = '×';
+        btn.title = 'Eliminar';
+        btn.addEventListener('click', () => {
+          cart.splice(index, 1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          renderCart();
+        });
+        li.appendChild(btn);
+        cartItems.appendChild(li);
+      });
+    }
+
+    clearCartBtn.addEventListener('click', () => {
+      cart = [];
+      localStorage.removeItem('cart');
+      renderCart();
+    });
+
+    // Enviar formulario personalización
     customizeForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (!selectedModel || !selectedCollection) {
+        alert('Por favor, selecciona un modelo de vela.');
+        return;
+      }
       const scent = document.getElementById('scent').value;
       const color = document.getElementById('color').value;
       const size = document.getElementById('size').value;
-      alert(`Vela personalizada agregada: Esencia ${scent}, Color ${color}, Tamaño ${size} cm`);
+      const product = {
+        collection: selectedCollection.charAt(0).toUpperCase() + selectedCollection.slice(1),
+        model: selectedModel,
+        scent,
+        color,
+        size
+      };
+      cart.push(product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`Producto agregado al carrito:\n${product.collection} - ${product.model}\nEsencia: ${scent}, Color: ${color}, Tamaño: ${size} cm`);
       customizeForm.reset();
       sizeValue.textContent = '10 cm';
+      renderCart();
+    });
+
+    // Inicializar carrito al cargar
+    renderCart();
+
+    // Contact form simple submit handler (puedes conectar a backend real)
+    document.querySelector('.contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Gracias por contactarnos. Te responderemos pronto.');
+      e.target.reset();
     });
   </script>
 </body>
