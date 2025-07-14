@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kefi Studio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    :root {
+      --pastel-rosa: #f6e6f8;
+      --pastel-lavanda: #e4d4ec;
+      --pastel-pink: #f7cfe3;
+      --text-dark: #3a2c3f;
+      --accent: #dba8c4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--pastel-rosa);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+    header {
+      background: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+    .hero {
+      background: linear-gradient(to right, var(--pastel-rosa), var(--pastel-pink));
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .hero button {
+      padding: 0.7rem 1.5rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero button:hover {
+      background: #c08bab;
+    }
+    .section {
+      padding: 3rem 2rem;
+    }
+    .collections {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .collection-item {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      width: 200px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      text-align: center;
+      cursor: pointer;
+    }
+    .contact-form {
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .contact-form button {
+      padding: 0.7rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: white;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kefi Studio</h1>
+    <nav>
+      <a href="#hero">Inicio</a>
+      <a href="#collections">Colecciones</a>
+      <a href="#about">Sobre nosotros</a>
+      <a href="#contact">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="hero">
+    <h2>Velas artesanales con esencia emocional</h2>
+    <p>Descubre nuestras colecciones hechas a mano</p>
+    <button onclick="document.getElementById('collections').scrollIntoView({behavior: 'smooth'})">Explora nuestras colecciones</button>
+  </section>
+
+  <section class="section" id="collections">
+    <h2 style="text-align:center; margin-bottom:2rem">Colecciones</h2>
+    <div class="collections">
+      <div class="collection-item">Marina</div>
+      <div class="collection-item">Floral</div>
+      <div class="collection-item">Cactus</div>
+      <div class="collection-item">Halloween</div>
+      <div class="collection-item">Navidad</div>
+      <div class="collection-item">Pascua</div>
+      <div class="collection-item">Eventos</div>
+    </div>
+  </section>
+
+  <section class="section" id="about" style="background: var(--pastel-lavanda);">
+    <h2 style="text-align:center; margin-bottom:1rem">Sobre Kefi Studio</h2>
+    <p style="max-width:600px; margin:0 auto; text-align:center">
+      Kefi Studio nace del amor por las velas artesanales, sostenibles y con diseño artístico. Hechas a mano con materiales naturales y mucha dedicación.
+    </p>
+  </section>
+
+  <section class="section" id="contact">
+    <h2 style="text-align:center; margin-bottom:1rem">Contacto</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Tu nombre" required />
+      <input type="email" placeholder="Tu correo" required />
+      <textarea placeholder="Tu mensaje..." rows="5" required></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Kefi Studio. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Aquí puedes integrar Swiper o lógica personalizada
+  </script>
+</body>
+</html>
