@@ -31,28 +31,7 @@
       flex-direction: column;
       position: relative;
       z-index: 1;
-      background: transparent;
-    }
-    #background-fader {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background: #000;
-    }
-    .background-image {
-      position: absolute;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 2.5s cubic-bezier(0.77,0,0.18,1);
-      will-change: opacity;
-    }
-    .background-image.active {
-      opacity: 1;
-      z-index: 1;
+      background: var(--pastel-rosa);
     }
     #content {
       position: relative;
@@ -309,52 +288,48 @@
       background: #fff;
       transition: opacity 0.4s;
     }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: var(--text-dark);
+    .cart-section-flex {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
-    select, input[type=range] {
+    .cart-side-img {
+      display: flex;
+      align-items: center;
+      min-width: 120px;
+      max-width: 180px;
+      width: 14vw;
+      transition: opacity 2.5s;
+      opacity: 1;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px var(--shadow-light);
+      background: #fff;
+      height: 220px;
+      justify-content: center;
+    }
+    .cart-side-img img {
       width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1.5rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    .range-value {
-      text-align: right;
-      font-weight: 600;
-      margin-top: -1.2rem;
-      margin-bottom: 1rem;
-      color: var(--accent-dark);
-    }
-    button.primary {
+      object-fit: cover;
+      height: 100%;
+      border-radius: 18px;
       display: block;
-      width: 100%;
-      padding: 0.8rem;
-      background: var(--accent);
-      border: none;
-      border-radius: 30px;
-      color: white;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-      font-weight: 700;
-    }
-    button.primary:hover {
-      background: var(--accent-dark);
+      transition: opacity 2.5s;
     }
     #cart {
       background: white;
       border-radius: 15px;
       box-shadow: 0 4px 15px var(--shadow-light);
       padding: 2rem;
-      margin: 3rem 0;
       max-width: 600px;
+      width: 100%;
       margin-left: auto;
       margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     #cart h3 {
       text-align: center;
@@ -383,6 +358,22 @@
       color: var(--accent-dark);
       cursor: pointer;
       font-size: 1.2rem;
+    }
+    button.primary {
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-weight: 700;
+    }
+    button.primary:hover {
+      background: var(--accent-dark);
     }
     #about, #contact {
       background: var(--pastel-lavanda);
@@ -435,32 +426,34 @@
       box-shadow: 0 -2px 10px var(--shadow-light);
       flex-shrink: 0;
     }
-    @media (max-width: 768px) {
-      .swiper-slide {
-        height: 140px;
-        font-size: 1rem;
+    @media (max-width: 900px) {
+      .cart-section-flex {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
       }
-      .hero h2 {
-        font-size: 1.8rem;
+      .cart-side-img {
+        margin: 0 auto;
+        min-width: 90px;
+        max-width: 160px;
+        width: 55vw;
+        height: 110px;
       }
-      .hero p {
-        font-size: 1rem;
+    }
+    @media (max-width: 600px) {
+      .cart-section-flex {
+        gap: 0.5rem;
       }
-      .model-item {
-        width: 90px;
-      }
-      .model-img-preview img {
-        width: 120px;
+      .cart-side-img {
+        min-width: 70px;
+        max-width: 100px;
+        width: 40vw;
+        height: 60px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Fondo animado -->
-  <div id="background-fader">
-    <img class="background-image active" id="bg1" src="images/mar_fondo.png" alt="Fondo mar 1">
-    <img class="background-image" id="bg2" src="images/mar_fondo_2.png" alt="Fondo mar 2">
-  </div>
   <div id="content">
     <header>
       <h1>Kefi Studio</h1>
@@ -537,11 +530,19 @@
         </form>
       </section>
 
-      <!-- Carrito -->
-      <section id="cart" class="section">
-        <h3>Carrito de Compra</h3>
-        <ul id="cartItems"></ul>
-        <button id="clearCart" class="primary" style="background:#c08bab;">Vaciar carrito</button>
+      <!-- Carrito con imágenes laterales -->
+      <section class="cart-section-flex">
+        <div class="cart-side-img">
+          <img id="cartImgLeft" src="images/mar_fondo.png" alt="Decoración izquierda">
+        </div>
+        <section id="cart" class="section">
+          <h3>Carrito de Compra</h3>
+          <ul id="cartItems"></ul>
+          <button id="clearCart" class="primary" style="background:#c08bab;">Vaciar carrito</button>
+        </section>
+        <div class="cart-side-img">
+          <img id="cartImgRight" src="images/mar_fondo_2.png" alt="Decoración derecha">
+        </div>
       </section>
 
       <section id="about">
@@ -569,21 +570,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Fondo animado usando <img> para máxima compatibilidad
-    const bg1 = document.getElementById('bg1');
-    const bg2 = document.getElementById('bg2');
-    let showingFirst = true;
-    setInterval(() => {
-      if (showingFirst) {
-        bg2.classList.add('active');
-        bg1.classList.remove('active');
-      } else {
-        bg1.classList.add('active');
-        bg2.classList.remove('active');
-      }
-      showingFirst = !showingFirst;
-    }, 15000);
-
     // Hamburger menu
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const nav = document.getElementById('mainNav');
@@ -603,7 +589,7 @@
       });
     });
 
-    // Datos de colecciones y modelos con imágenes PNG y variantes por color
+    // Carrusel Swiper
     const collectionsData = {
       marina: [
         { name: 'Estrella', base: 'images/marina_estrella', colors: ['blanco','rosa','lila','amarillo'] },
@@ -648,7 +634,6 @@
       ]
     };
 
-    // Inicializar Swiper
     const swiper = new Swiper('.swiper', {
       slidesPerView: 3,
       spaceBetween: 30,
@@ -662,8 +647,6 @@
         1024: { slidesPerView: 3, spaceBetween: 30 },
       },
     });
-
-    // Avanzar diapositivas con scroll vertical
     window.addEventListener('wheel', (e) => {
       if (e.deltaY > 0) {
         swiper.slideNext();
@@ -811,6 +794,27 @@
       alert('Gracias por contactarnos. Te responderemos pronto.');
       e.target.reset();
     });
+
+    // Rotación de imágenes laterales del carrito
+    const cartImgs = [
+      "images/mar_fondo.png",
+      "images/mar_fondo_2.png"
+    ];
+    let cartImgIndex = 0;
+    const cartImgLeft = document.getElementById('cartImgLeft');
+    const cartImgRight = document.getElementById('cartImgRight');
+    setInterval(() => {
+      cartImgIndex = (cartImgIndex + 1) % cartImgs.length;
+      // Fade out
+      cartImgLeft.style.opacity = 0;
+      cartImgRight.style.opacity = 0;
+      setTimeout(() => {
+        cartImgLeft.src = cartImgs[cartImgIndex];
+        cartImgRight.src = cartImgs[(cartImgIndex + 1) % cartImgs.length];
+        cartImgLeft.style.opacity = 1;
+        cartImgRight.style.opacity = 1;
+      }, 600);
+    }, 15000);
   </script>
 </body>
 </html>
